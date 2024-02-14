@@ -13,7 +13,6 @@ function Board() {
         <Tile />
         <Tile />
         <Tile />
-
         <Strike />
     </div>
     );
