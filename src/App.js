@@ -1,8 +1,18 @@
 import './App.css';
-import TicTacToe from './components/TicTacToe';
+import TicTacToe from './gameComponents/TicTacToe';
+import Chat from './chatComponents/Chat';
 
 function App() {
-  return <TicTacToe />;
+  return (
+    <div className="app-container">
+      <div className="tictactoe-container">
+        <TicTacToe />
+      </div>
+      <div className="chat-container">
+        <Chat />
+      </div>
+    </div>
+  );
 }
 
 export default App;
