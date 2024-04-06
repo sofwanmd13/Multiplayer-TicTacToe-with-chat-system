@@ -12,20 +12,29 @@ export default function InputText({addMessage}) {
         }
     }
 
+    function handleKeyDown(e) {
+        // Check if Enter is pressed without the Shift key
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // Prevent default Enter behavior (i.e., adding a new line)
+            addNewMessage();
+        }
+    }
+
     return ( 
-    <div className="textContainer">
+    <div className="inputContainer">
         <textarea 
         className="textArea"
         rows={6}
         placeholder = "Type your message here..."
         value = {message}
-        onChange = {e => setMessage(e.target.value)}
+        onChange = {e => setMessage(e.target.value)
+        }
+        onKeyDown={handleKeyDown}
         >
         </textarea>
         <button className = "textButton"
             onClick = {() => addNewMessage()}
         >
-            <span className="buttonContent">SEND</span>
             <img src={sendIcon} alt="Send" className="buttonIcon" />
         </button>
     </div> 

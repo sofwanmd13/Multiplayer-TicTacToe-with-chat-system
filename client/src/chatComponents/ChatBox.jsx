@@ -1,32 +1,34 @@
-import {Avatar, Image} from 'antd';
+import { Avatar, Image } from 'antd';
 import '../App.css';
 
-export default function ChatBoxReceiver({avatar, user, message}) {
+export default function ChatBoxReceiver({ avatar, user, message }) {
     return (
         <div className="chatBoxReceiver">
-            <Avatar
-                size={50}
-                src={<Image src={avatar} preview={false}/>}
-            />
+            <div className="custom-avatar">
+                <Avatar
+                    src={<Image src={avatar} preview={false} />}
+                />
+            </div>
             <p>
-                <strong> {user} </strong> <br></br>
-                {message}
+                <strong>{user}</strong> <br></br>
+                <div className="messageContent">{message}</div>            
             </p>
         </div>
     );
 }
 
-export function ChatBoxSender({avatar, user, message}) {
+export function ChatBoxSender({ avatar, user, message }) {
     return (
         <div className="chatBoxSender">
             <p>
-                <strong> {user} </strong> <br></br>
-                {message}
+                <strong>{user}</strong> <br></br>
+                <div className="messageContent">{message}</div>            
             </p>
-            <Avatar
-                size={50} 
-                src={<Image src={avatar} preview={false}/>}
-            />
+            <div className="custom-avatar">
+                <Avatar
+                    src={<Image src={avatar} preview={false} />}
+                />
+            </div>
         </div>
     );
 }

@@ -10,6 +10,7 @@ body {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 40s ease infinite;
+  overflow: hidden;
 }
 
 h1 {
@@ -145,7 +146,6 @@ h1 {
   font-size: 1.5em;
 }
 
-/*Chat CSS*/
 .chat-display {
   flex-basis: 30%;
   display: flex;
@@ -154,15 +154,43 @@ h1 {
   height: 100vh;
   color: black;
   background: #fafafa;
-  overflow: hidden; /*To avoid scrolling*/
+  overflow: hidden; 
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+
 }
 
 .chat-container {
   width: 100%;
 }
 
+.header-panel {
+  display: flex;
+  justify-content: space-between; /* Adjusted to space-between for title centering */
+  align-items: center;
+  padding: 0 10px;
+  height: 8vh;
+  width: 100%;
+  border-top: 1.5px solid #D3D3D3;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-panel::before {
+  content: '';
+  flex: 1;
+}
+
+.header-panel h1 {
+  flex: 2;
+  text-align: center;
+}
+
+.header-panel .logOutButton-container {
+  flex: 1;
+  text-align: right;
+}
+
 .chatList-container {
-  max-height: 80vh;
+  max-height: 82vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -184,11 +212,32 @@ h1 {
   flex-direction: row;
 }
 
-.ant-avatar img {
+.custom-avatar .ant-avatar {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%; 
+}
+
+.custom-avatar .ant-avatar img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  width: 45px; 
-  height: 45px;
-  border-radius: 50%;
+}
+
+:root {
+  --avatar-size: 40px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --avatar-size: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --avatar-size: 30px;
+  }
 }
 
 .chatBoxReceiver p{
@@ -197,6 +246,8 @@ h1 {
   background-size: 200% 200%;
   border-radius: 10px;
   max-width: 60%;
+  word-wrap: break-word;
+  word-break: break-all;
   margin-left: 6px; /* Space between avatar and message */
 }
 
@@ -206,6 +257,8 @@ h1 {
   background-size: 200% 200%;
   border-radius: 10px;
   max-width: 60%;
+  word-wrap: break-word;
+  word-break: break-all;
   margin-right: 6px; /* Space between avatar and message */
 }
 
@@ -225,58 +278,55 @@ h1 {
   font-size: 13;
 }
 
-.textContainer {
-  display:flex;
+.messageContent {
+  white-space: pre-wrap;
+}
+
+.inputContainer {
+  display: flex;
+  background-color: #fafafa;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 1vh;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 30%;
+  height: 8vh;
+  gap: 1vw; 
+  padding-top: 1vh;
+  border-top: 1.5px solid #D3D3D3;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .textArea {
-  width: 15vw;
+  flex-grow: 1;
   height: 5vh;
   border-radius: 10px;
-  border-width: 0;
+  border: 1px solid #ccc;
   padding: 10px;
   font-size: 18px;
-  margin-right: 1vw;
-  margin-left: 2vw;
-  resize: none; /* Disables resizing */
+  margin-left: 1vw;
+  resize: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .textButton {
-  width: 10vw; 
-  height: 50px; 
-  font-weight: bold;
-  border-radius: 10px;
-  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; 
+  height: 50px;
+  border-radius: 22.75%;
   background-color: #34b7f1;
   border-width: 0;
-  color: #fff;
-  margin-right: 10vw;
-}
-
-.textButton .buttonContent {
-  display: inline-block;
+  margin-right: 1vw;
+  cursor: pointer; 
 }
 
 .textButton .buttonIcon {
-  display: none;
+  display: block;
   width: 100%;
   height: 100%; 
   padding-left: 5%;
-}
-
-@media (max-width: 500px) {
-  .textButton .buttonContent {
-    display: none;
-  }
-
-  .textButton .buttonIcon {
-    display: inline-block;
-  }
 }
 
 .login-title {
@@ -293,11 +343,12 @@ h1 {
 .user-input {
   margin: 10px;
   height: 30px;
-  width: 20%;
+  width: 100%;
   border-radius: 10px;
   border-width: 10px;
   font-size: 15px;
   padding-inline: 5px;
+  text-align: center;
 }
 
 .loginButton {
@@ -324,25 +375,8 @@ h1 {
   margin-right: 15px;
 }
 
-.header-panel {
-  display: flex;
-  justify-content: space-between; /* Adjusted to space-between for title centering */
-  align-items: center;
-  padding: 0 10px;
-  width: 100%;
-}
-
-.header-panel::before {
-  content: '';
-  flex: 1;
-}
-
-.header-panel h1 {
-  flex: 2;
-  text-align: center;
-}
-
-.header-panel .logOutButton-container {
-  flex: 1;
-  text-align: right;
+@media (min-height: px) {
+  :root {
+    --avatar-size: 50px;
+  }
 }
