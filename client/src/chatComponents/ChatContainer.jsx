@@ -1,38 +1,31 @@
-import { useEffect, useRef, useState } from "react";
-import socketIOClient from "socket.io-client";
+import { useEffect, useContext, useState, useRef } from "react";
+import SocketContext from '../SocketContext.js'; // Import the context
 import InputText from './InputText';
 import ChatBoxReceiver, { ChatBoxSender } from './ChatBox';
 
-const ENDPOINT = "http://localhost:3000";
-
 function ChatContainer({ user, setUser, avatar, setAvatar }) {
+    const socket = useContext(SocketContext); // Access the socket from context
     const [chats, setChats] = useState([]);
     const chatListRef = useRef(null);
-    const socketio = useRef(null); // Use ref to persist the socket instance across re-renders
+    //const socketio = useRef(null); // Use ref to persist the socket instance across re-renders
 
     useEffect(() => {
-        // Initialize socket connection only when there's a user
-        if (user && !socketio.current) {
-            socketio.current = socketIOClient(ENDPOINT);
-            
-            socketio.current.on('chat', (message) => {
-                // Update chats with new messages
-                setChats(prevChats => [...prevChats, message]);
-            });
+        if (socket) {
+          socket.on('chat', (message) => {
+            // Handle chat messages
+            setChats(prevChats => [...prevChats, message]);
+          });
+    
+          // Clean up event listener
+          return () => {
+            socket.off('chat');
+          };
         }
-
-        // Cleanup function to disconnect socket when component unmounts or user logs out
-        return () => {
-            if (socketio.current) {
-                socketio.current.disconnect();
-                socketio.current = null;
-            }
-        };
-    }, [user]); // Reinitialize socket connection on user change
+    }, [socket]);
 
     const sendChatToSocket = (chat) => {
-        if (socketio.current) {
-            socketio.current.emit("chat", chat);
+        if (socket) {
+            socket.emit("chat", chat);
         }
     };
 

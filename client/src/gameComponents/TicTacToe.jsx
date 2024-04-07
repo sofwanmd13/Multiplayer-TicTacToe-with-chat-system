@@ -1,4 +1,5 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext, useRef} from "react";
+import SocketContext from '../SocketContext.js'; // Import the context
 import Board from "./Board";
 import GameOver from "./GameOver";
 import GameState from "./GameState";
@@ -12,7 +13,7 @@ gameOverSound.volume = 0.2;
 const clickSound = new Audio(clickSoundAsset);
 clickSound.volume = 0.5;
 
-const PLAYER_X = "X";
+const PLAYER_X = "X"
 const PLAYER_O = "O";
 
 const winningCombinations = [
@@ -60,6 +61,7 @@ function checkWinner(tiles, setStrikeClass, setGameState){
 }
 
 function TicTacToe() {
+    const socket = useContext(SocketContext); // Access the socket from context
     const[tiles, setTiles] = useState(Array(9).fill(null));
     const[playerTurn, setPlayerTurn] = useState(PLAYER_X);
     const[strikeClass, setStrikeClass] = useState();
